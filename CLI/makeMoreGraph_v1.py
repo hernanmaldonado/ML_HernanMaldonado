@@ -88,7 +88,7 @@ def input_capture()->int:
    
 def main():
     try:
-        fpath="../auxiliary/"
+        fpath="./auxiliary/"
         cnt=input_capture()
         words=load_data(fpath+"names.txt")
         allchrs=getallchars(words)
