@@ -2,7 +2,8 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from NameGen import *
 import pickle
-
+import webbrowser
+    
 class Item(BaseModel):
     name: str
 
@@ -12,7 +13,8 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message":"Hello world"}
+    return {"message":"Go to http://127.0.0.1/items/5"}
+     
 
 @app.get("/items/{item_id}")
 def read_item(item_id:int):
