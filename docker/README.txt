@@ -6,7 +6,7 @@ packages required:
 
 To launch the api in docker you need to run docker and the following commands:  
 	Make sure docker is running
-	Run the following commands in the l;ocatioin wqhere the docker 
+	Run the following commands in the locatioin wqhere the docker 
 	docker build -t namegen .
 	docker run -d --name mycontainer -p 80:80 namegen
 	
