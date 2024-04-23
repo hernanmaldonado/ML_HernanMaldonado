@@ -1,6 +1,6 @@
 # nameGen: A Probabilistic Graph Approach to GenAI
 
-This project is based in Andrej Karpathy's [makemore](https://github.com/karpathy/makemore). His project uses different approaches, from bigrams to deeplearning and transformers. I use a probabilistic graph instead. 
+This project is based in Andrej Karpathy's [makemore](https://github.com/karpathy/makemore). His project uses different approaches, from bigrams to deep learning and transformers. I use a probabilistic graph instead. 
 I picked this approach because it offers an efficient model with a small footprint and high performance.  
 
 nameGen shows my creativity to come up with a different approach to a problem and solve it in an efficient, yet innovative way, without sacificing performance. 
