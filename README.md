@@ -13,10 +13,10 @@ Check out the python notebook in the [Tutorial](https://github.com/hernanmaldona
 ## Set-up
 nameGen has three different deploymement methods you can try.
 1. [CLI](https://github.com/hernanmaldonado/nameGen/tree/main/CLI): you can downlowd the CLI files **install the libraries** that are referenced on the README file on the [CLI](https://github.com/hernanmaldonado/nameGen/tree/main/CLI) folder and try namGen yourself.
-   The fastest version is makeMoreGraph_v3.py, it uses a pickle file with the graph already created and ready to create new names. To run it all you need to do is type:
+   The core version is makeMoreGraphBuild.py. To run it all you need to do is type:
     
    ```
-   python makeMoreGraph_v3.py
+   python makeMoreGraphBuild.py
    ```
 2. [fastAPI](https://github.com/hernanmaldonado/nameGen/tree/main/fastAPI): This version of nameGen showcases the creation of an API to use the app. The basic commands to run the API are:
    ```
