@@ -5,10 +5,10 @@ def load_data(path:str)->list:
     return open(path).read().splitlines()
 
      
-def padding(words:list)->list:
+def padding(words:list,size)->list:
     new_words=list()
     for word in words:
-        endpadding=15-len(word)
+        endpadding=size-1-len(word)
         new_words.append("*"+word+"~"*endpadding)
     return new_words
 
@@ -23,10 +23,11 @@ def getallchars(words:list)->set:
     return sorted(allchrs)
 
 
-def trackfunc(new_words):
+def trackfunc(new_words,size):
     tracking=dict()
+    #size=len(max(new_words,key=len))+1
     for word in new_words:
-        for i,j in list(zip(range(16), range(1,16))):
+        for i,j in list(zip(range(size), range(1,size))):
             poschri=str(i)+word[i]
             poschrj=str(j)+word[j]
             if not poschri in tracking:
@@ -49,8 +50,8 @@ def graphbuilder(tracking:dict)->nx.DiGraph:
     return DG
 
 
-def bigramgraph(new_words:list)->nx.DiGraph:
-    DG=graphbuilder(trackfunc(new_words))
+def bigramgraph(new_words:list,size:int)->nx.DiGraph:
+    DG=graphbuilder(trackfunc(new_words,size))
     return DG
     
 def zerodict(mylist:list)->dict:

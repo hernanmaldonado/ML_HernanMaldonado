@@ -11,9 +11,10 @@ def main():
         fpath="./auxiliary/"
         cnt=input_capture()
         words=load_data(fpath+'names.txt')
+        size=len(max(words,key=len))+1
         allchrs=getallchars(words)
-        new_words=padding(words)
-        DG=bigramgraph(new_words)
+        new_words=padding(words,size)
+        DG=bigramgraph(new_words,size)
         #with open(fpath+'DG.gpickle', 'rb') as f:
         #    DG = pickle.load(f)
         g = torch.Generator().manual_seed(torch.randint(0, 10000000000, (1,)).item())
