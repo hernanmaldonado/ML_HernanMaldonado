@@ -6,7 +6,15 @@ import nameGenfuncs
 
 def load_data(path:str)->list:
     return open(path).read().splitlines()
+
      
+def padding(words:list,size)->list:
+    new_words=list()
+    for word in words:
+        endpadding=size-1-len(word)
+        new_words.append("*"+word+"~"*endpadding)
+    return new_words
+
 
 def getallchars(words:list)->set:
     allchrs=set()
@@ -17,37 +25,37 @@ def getallchars(words:list)->set:
     allchrs.add('~')
     return sorted(allchrs)
 
-def padding(words:list)->list:
-    new_words=list()
-    for word in words:
-        endpadding=15-len(word)
-        new_words.append("*"+word+"~"*endpadding)
-    return new_words
 
-def bigramgraph(allchrs:set,new_words:list)->nx.DiGraph:
+def trackfunc(new_words,size):
+    tracking=dict()
+    for word in new_words:
+        for i,j in list(zip(range(size), range(1,size))):
+            poschri=str(i)+word[i]
+            poschrj=str(j)+word[j]
+            if not poschri in tracking:
+                tracking[poschri]=dict()
+            if poschrj in tracking[poschri]:
+                tracking[poschri][poschrj]+=1
+            else:
+                tracking[poschri][poschrj]=1
+    return tracking
+
+def graphbuilder(tracking:dict)->nx.DiGraph:
     DG = nx.DiGraph()
-    for i,j in list(zip(range(16), range(1,16))):
-        for bchr in allchrs:
-            for achr in allchrs:
-                cnt=0
-                cntb=0
-                for word in new_words:
-                    if word[i]==bchr:
-                        cntb+=1
-                        if word[j]==achr:
-                            cnt+=1   
-                start=str(i)+bchr
-                end=str(j)+achr
-                if cntb==0:
-                    p=0
-                else:
-                    p=round(cnt/cntb,2)
-                if p>0:
-                    DG.add_edge(start,end,weight=p)
+    for k,v in tracking.items():
+        total=0
+        for x,y in v.items():
+            total+=y
+        for x,y in v.items():
+            p=round(y/total,2)
+            DG.add_edge(k,x,weight=p)
+    return DG
+
+
+def bigramgraph(new_words:list,size:int)->nx.DiGraph:
+    DG=graphbuilder(trackfunc(new_words,size))
     return DG
     
-
-
 def zerodict(mylist:list)->dict:
     mydict=dict()
     for key in mylist:
@@ -63,8 +71,6 @@ def makemore(allchrs,g, DG):
             probdict=zerodict(allchrs)
             for s in list(DG.successors(start)):
                 probdict[s[-1]]=DG.get_edge_data(start,s)['weight']
-            #print(probdict)
-            #print(list(probdict.values()))
             p=torch.tensor(list(probdict.values()),dtype=float)
             start='1~'
             ix = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
@@ -73,3 +79,13 @@ def makemore(allchrs,g, DG):
             if not allchrs[ix]=='~':
                 out.append(allchrs[ix])
         return ''.join(out)
+
+def input_capture()->int:
+    args = input("Enter the number of names you want to generate: ")
+    if args is None:
+        return 1
+    elif args.isnumeric():
+        cnt=int(args)
+        return cnt
+    else:
+        return 0

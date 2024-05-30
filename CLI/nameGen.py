@@ -25,7 +25,6 @@ def getallchars(words:list)->set:
 
 def trackfunc(new_words,size):
     tracking=dict()
-    #size=len(max(new_words,key=len))+1
     for word in new_words:
         for i,j in list(zip(range(size), range(1,size))):
             poschri=str(i)+word[i]
